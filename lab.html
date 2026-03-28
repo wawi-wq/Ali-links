@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALI | ELITE PRESENCE & PORTFOLIO</title>
+    <title>ALI | ELITE PRESENCE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -21,12 +21,14 @@
 
         body {
             background: var(--bg-dark);
-            display: flex; align-items: center; justify-content: center;
+            display: flex; 
+            align-items: flex-start; /* تغيير من center لرفع المحتوى للأعلى */
+            justify-content: center;
             min-height: 100vh; color: white; overflow: hidden;
             perspective: 2000px; position: relative;
+            padding-top: 40px; /* دفع الكارت للأعلى قليلاً */
         }
 
-        /* --- أنيميشن 1: تأثير الخطوط الرقمية الخلفية --- */
         body::before {
             content: " ";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -36,11 +38,7 @@
             z-index: 99; pointer-events: none; opacity: 0.6;
         }
 
-        /* --- أنيميشن 2: مطر البيانات (Matrix Rain) --- */
         #dataRain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
-
-        /* --- أنيميشن 3: دخول الكنتينر الأساسي (Emerge) --- */
-        @keyframes emerge { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
         .container {
             width: 92%; max-width: 380px;
@@ -51,65 +49,31 @@
             border-radius: 35px;
             text-align: center;
             box-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
-            animation: emerge 1.2s cubic-bezier(0.19, 1, 0.22, 1); /* أنيميشن الظهور مفعّل */
+            animation: emerge 1.2s cubic-bezier(0.19, 1, 0.22, 1);
             transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1); /* أنيميشن الـ Hover مفعّل */
+            transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
             position: relative;
             z-index: 10;
         }
         
-        /* تأثير الـ 3D Hover مفعّل */
         .container:hover { transform: rotateY(7deg) rotateX(3deg) translateZ(10px); }
 
-        /* --- أنيميشن 4: تنسيقات البروفايل والجليتش (الجمجمة وعودتها) --- */
+        @keyframes emerge { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
         .profile-wrapper { position: relative; width: 110px; height: 110px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; }
-        
-        .profile-img-cyber { 
-            width: 100px; height: 100px; 
-            background: url('me.png') center/contain no-repeat; 
-            z-index: 2; 
-            filter: drop-shadow(0 0 10px var(--primary)); 
-            transition: opacity 0.4s ease; /* أنيميشن الاختفاء مفعّل */
-        }
-        
-        /* صورة الجمجمة عادت لتعمل */
-        .profile-img-skull { 
-            width: 85px; height: 85px; 
-            background: url('skull.png') center/contain no-repeat; 
-            position: absolute; 
-            z-index: 3; 
-            opacity: 0; /* مخفية افتراضياً */
-            filter: drop-shadow(0 0 15px #ff0000); 
-            transform: scale(0.5); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* أنيميشن الظهور مفعّل */
-        }
-        
-        /* الدائرة الدوارة حول البروفايل عادت */
-        .profile-wrapper::after { 
-            content: ''; position: absolute; 
-            width: 115px; height: 115px; 
-            border-radius: 50%; 
-            border: 2px solid var(--primary); 
-            border-top-color: transparent; border-bottom-color: transparent; 
-            animation: spin 3s linear infinite; /* أنيميشن الدوران مفعّل */
-            transition: border-color 0.3s;
-        }
+        .profile-img-cyber { width: 100px; height: 100px; background: url('me.png') center/contain no-repeat; z-index: 2; filter: drop-shadow(0 0 10px var(--primary)); transition: opacity 0.4s; }
+        .profile-img-skull { width: 85px; height: 85px; background: url('skull.png') center/contain no-repeat; position: absolute; z-index: 3; opacity: 0; filter: drop-shadow(0 0 15px #ff0000); transform: scale(0.5); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .profile-wrapper::after { content: ''; position: absolute; width: 115px; height: 115px; border-radius: 50%; border: 2px solid var(--primary); border-top-color: transparent; border-bottom-color: transparent; animation: spin 3s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- أنيميشن 5: قطرات الدم عادت لتعمل --- */
         .blood-drip { position: absolute; top: 70%; width: 3px; background: #ff0000; border-radius: 0 0 5px 5px; z-index: 4; opacity: 0; pointer-events: none; }
         @keyframes dripDown { 0% { height: 0; opacity: 1; transform: translateY(0); } 50% { height: 20px; opacity: 1; } 100% { height: 0; opacity: 0; transform: translateY(40px); } }
-        
-        /* تفعيل تأثير الجمجمة والجليتش والدم عند إضافة الكلاس */
         .skull-glitch .blood-drip { animation: dripDown 1.5s infinite; opacity: 1; }
         .skull-glitch .profile-img-cyber { opacity: 0; }
         .skull-glitch .profile-img-skull { opacity: 1; transform: scale(1.1); }
         .skull-glitch .profile-wrapper::after { border-color: #ff0000; }
 
-        /* الاسم (تأثير الجليتش مفعّل عبر JS) */
-        h1 { font-size: 22px; letter-spacing: 2px; margin-bottom: 5px; color: #fff; text-shadow: 0 0 10px var(--primary); font-family: var(--font-tech); }
-        
-        /* الحالة (أنيميشن النبض مفعّل) */
+        h1 { font-size: 22px; letter-spacing: 2px; margin-bottom: 5px; color: #fff; text-shadow: 0 0 10px var(--primary); }
         .status { font-size: 11px; letter-spacing: 3px; margin-bottom: 20px; animation: warningPulse 2s infinite; }
         @keyframes warningPulse { 0%, 100% { color: var(--primary); } 50% { color: #ff0000; } }
 
@@ -119,21 +83,20 @@
         .cyber-btn i { font-size: 20px; margin-left: 15px; color: var(--primary); }
         .cyber-btn span { font-size: 13px; flex-grow: 1; text-align: right; font-weight: 600; }
 
-        /* --- الأيقونة المنبثقة للـ CV (مدمجة بذكاء) --- */
+        /* أيقونة الـ CV المحدثة - مكان ثابت وواضح */
         .cv-trigger {
-            position: fixed; bottom: 30px; left: 30px;
+            position: fixed; bottom: 35px; left: 30px;
             width: 60px; height: 60px;
             background: rgba(0, 0, 0, 0.8);
             border-radius: 50%; border: 2px solid var(--primary);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 1000;
-            box-shadow: 0 0 15px var(--primary), inset 0 0 10px var(--primary);
+            box-shadow: 0 0 20px var(--primary);
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .cv-trigger:hover { transform: scale(1.15) rotate(10deg); box-shadow: 0 0 25px var(--primary); }
-        .cv-trigger svg { width: 28px; height: 28px; fill: var(--primary); filter: drop-shadow(0 0 5px var(--primary)); }
+        .cv-trigger:active { transform: scale(0.9); }
+        .cv-trigger svg { width: 28px; height: 28px; fill: var(--primary); }
 
-        /* --- نافذة الـ CV المنبثقة (Overlay) --- */
         .cv-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.97); z-index: 2000;
@@ -146,16 +109,13 @@
             position: fixed; top: 20px; right: 20px; width: 50px; height: 50px;
             background: rgba(255,255,255,0.05); color: var(--primary);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 24px; cursor: pointer; z-index: 2001; transition: 0.3s;
+            font-size: 24px; cursor: pointer; z-index: 2001;
         }
-        .close-cv:hover { background: #ff0000; color: white; transform: rotate(90deg); }
 
         .cv-content { max-width: 900px; margin: 40px auto; padding: 20px; direction: rtl; }
         .glass-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 25px; padding: 30px; margin-bottom: 25px; }
         .section-title { color: var(--primary); margin-bottom: 20px; font-family: var(--font-tech); display: flex; align-items: center; gap: 10px; }
         .section-title::after { content: ''; height: 2px; flex-grow: 1; background: var(--primary); opacity: 0.2; }
-        .skill-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .skill-box { padding: 15px; border-right: 3px solid var(--primary); background: rgba(255,255,255,0.01); }
         .cv-content p, .cv-content li { font-family: var(--font-ar); color: #ccc; line-height: 1.7; }
 
     </style>
@@ -168,9 +128,9 @@
         <div class="profile-wrapper">
             <div class="profile-img-cyber"></div>
             <div class="profile-img-skull"></div>
-            <div class="blood-drip" style="left: 45%; animation-delay: 0s;"></div>
-            <div class="blood-drip" style="left: 55%; animation-delay: 0.4s;"></div>
-            <div class="blood-drip" style="left: 50%; animation-delay: 0.8s;"></div>
+            <div class="blood-drip" style="left: 45%;"></div>
+            <div class="blood-drip" style="left: 55%;"></div>
+            <div class="blood-drip" style="left: 50%;"></div>
         </div>
         
         <h1 id="glitchName">ALI HUSSEIN</h1>
@@ -192,44 +152,25 @@
         <p style="font-size: 8px; opacity: 0.4;">ENCRYPTED BY GEMINI AI • 2026</p>
     </div>
 
-    <div class="cv-trigger" onclick="toggleCV(true)" title="عرض ملف الـ CV">
-        <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z" /></svg>
+    <div class="cv-trigger" onclick="toggleCV(true)">
+        <svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
     </div>
 
     <div id="cvOverlay" class="cv-overlay">
         <div class="close-cv" onclick="toggleCV(false)">×</div>
-        
         <div class="cv-content">
             <div class="glass-card">
                 <h2 class="section-title">⚡ الملف الشخصي</h2>
-                <p style="font-family: var(--font-ar);">علي حسين، مبرمج ومعماري أنظمة ذكاء اصطناعي، أعمل على دمج التكنولوجيا المتقدمة في مجالات الطب والتعليم لبناء مستقبل أفضل لبلاد الرافدين.</p>
+                <p> "علي حسين؛ مهندس يشيد صروح الذكاء الاصطناعي، ومعلمٌ ينقل المعرفة، ومبرمجٌ يسخّر التكنولوجيا لخدمة الإنسانية، مكرساً رؤيته لدمج التقنيات الحديثة في جوهر الطب والتعليم." .</p>
             </div>
-
-            <div class="glass-card">
-                <h2 class="section-title"> المهارات التقنية</h2>
-                <div class="skill-list">
-                    <div class="skill-box"><strong>> Programmer</strong><p>Node.js, Python, PHP</p></div>
-                    <div class="skill-box"><strong>> AI Architect</strong><p>Medical Expert Systems</p></div>
-                    <div class="skill-box"><strong>> Educator</strong><p>Chemistry & Biology</p></div>
-                </div>
-            </div>
-
             <div class="glass-card">
                 <h2 class="section-title">🚀 المشاريع الكبرى</h2>
-                <div style="margin-bottom: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 5px;">• نظام تشخيص الأعصاب بالذكاء الاصطناعي</h3>
-                    <p>مشروع يهدف لتمكين المرضى من الحصول على تشخيص أولي دقيق عبر تحليل البيانات الطبية دون الحاجة لطبيب مختص بشكل فوري.</p>
-                </div>
-                <div>
-                    <h3 style="color: var(--primary); margin-bottom: 5px;">• منصة التعليم الرقمي للسادس العلمي</h3>
-                    <p>قنوات تليجرام ويوتيوب لشرح مناهج الكيمياء والأحياء بأحدث الوسائل التقنية لمساعدة الطلبة.</p>
-                </div>
+                <p>• نظام تشخيص الحالات المرضية والطبية بالذكاء الاصطناعي.<br>• منصة التعليم الرقمي للسادس العلمي.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. كود مطر البيانات (Matrix Rain) مفعّل ---
         const canvas = document.getElementById('dataRain');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -246,7 +187,6 @@
         }
         setInterval(draw, 50);
 
-        // --- 2. أنيميشن الاسم (Scramble Effect) مفعّل وعاد للعمل ---
         const nameEl = document.getElementById("glitchName");
         const original = nameEl.innerText;
         function scramble() {
@@ -257,22 +197,18 @@
                 iter += 1/3;
             }, 30);
         }
-        // تفعيل التأثير عند تحميل الصفحة
         window.onload = scramble;
 
-        // --- 3. جليتش الجمجمة والدم مفعّل وعاد للعمل بشكل تلقائي ---
         const container = document.getElementById('mainContainer');
         setInterval(() => {
-            if(Math.random() > 0.7) { // احتمال الجليتش
+            if(Math.random() > 0.7) {
                 container.classList.add('skull-glitch');
-                setTimeout(() => container.classList.remove('skull-glitch'), 2500); // مدة الجليتش
+                setTimeout(() => container.classList.remove('skull-glitch'), 2500);
             }
-        }, 8000); // تكرار الفحص
+        }, 8000);
 
-        // --- 4. وظائف فتح وإغلاق الـ CV مفعّلة ---
         function toggleCV(show) {
-            const overlay = document.getElementById('cvOverlay');
-            overlay.style.display = show ? 'block' : 'none';
+            document.getElementById('cvOverlay').style.display = show ? 'block' : 'none';
         }
     </script>
 </body>
