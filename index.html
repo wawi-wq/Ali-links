@@ -15,8 +15,8 @@
             --bg-dark: #020205;
         }
 
-        /* اخفاء سهم الماوس */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; cursor: none; }
+        /* تم استعادة الماوس الطبيعي */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
 
         body {
             background: var(--bg-dark);
@@ -26,7 +26,6 @@
             position: relative;
         }
 
-        /* تأثير CRT */
         body::before {
             content: " ";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -38,12 +37,6 @@
 
         #dataRain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
 
-        /* الكرصر النيوني */
-        .cursor-dot, .cursor-circle { pointer-events: none; position: fixed; border-radius: 50%; opacity: 0; z-index: 999; }
-        .cursor-dot { width: 6px; height: 6px; background-color: #fff; }
-        .cursor-circle { width: 35px; height: 35px; border: 2px solid var(--primary); box-shadow: 0 0 10px var(--primary); transition: transform 0.1s ease-out; }
-
-        /* الحاوية (معدلة لتناسب الشاشة) */
         .container {
             width: 92%; max-width: 380px;
             padding: 25px 20px;
@@ -56,13 +49,13 @@
             animation: emerge 1s ease-out;
             transform-style: preserve-3d;
             transition: transform 0.3s ease;
+            position: relative; /* مهم لقطرات الدم */
         }
 
         .container:hover { transform: rotateY(5deg) rotateX(2deg); }
 
         @keyframes emerge { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        /* منطقة الصورة والجمجمة */
         .profile-wrapper {
             position: relative;
             width: 110px; height: 110px; 
@@ -95,7 +88,29 @@
             transition: border-color 0.3s;
         }
 
-        /* كلاس الجنون */
+        /* تأثير تنقيط الدماء */
+        .blood-drip {
+            position: absolute;
+            top: 70%; /* يبدأ من منطقة الفم/الأسفل في الجمجمة */
+            width: 3px;
+            background: #ff0000;
+            border-radius: 0 0 5px 5px;
+            z-index: 4;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes dripDown {
+            0% { height: 0; opacity: 1; transform: translateY(0); }
+            50% { height: 20px; opacity: 1; }
+            100% { height: 0; opacity: 0; transform: translateY(40px); }
+        }
+
+        .skull-glitch .blood-drip {
+            animation: dripDown 1.5s infinite;
+            opacity: 1;
+        }
+
         .skull-glitch .profile-img-cyber { opacity: 0; }
         .skull-glitch .profile-img-skull { opacity: 1; transform: scale(1.1); }
         .skull-glitch .profile-wrapper::after { border-color: #ff0000; }
@@ -107,7 +122,6 @@
 
         @keyframes warningPulse { 0%, 100% { color: var(--primary); } 50% { color: #ff0000; } }
 
-        /* الأزرار (معدلة لتكون أنحف وتظهر اليوتيوب) */
         .links-grid { display: grid; gap: 10px; }
 
         .cyber-btn {
@@ -131,13 +145,14 @@
 <body>
 
     <canvas id="dataRain"></canvas>
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
 
     <div class="container" id="mainContainer">
         <div class="profile-wrapper">
             <div class="profile-img-cyber"></div>
             <div class="profile-img-skull"></div>
+            <div class="blood-drip" style="left: 45%; animation-delay: 0s;"></div>
+            <div class="blood-drip" style="left: 55%; animation-delay: 0.4s;"></div>
+            <div class="blood-drip" style="left: 50%; animation-delay: 0.8s;"></div>
         </div>
         
         <h1 id="glitchName">ALI HUSSEIN</h1>
@@ -145,16 +160,14 @@
 
         <div class="links-grid">
             <a href="https://www.instagram.com/not_wawi/" class="cyber-btn" target="_blank">
-                <i class="fab fa-instagram"></i><span>INSTAGRAM PROTOCOL</span>
-            </a>
-            <a href="https://wa.me/07704267198" class="cyber-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i><span>WHATSAPP SECURE</span>
+                <i class="fab fa-instagram"></i><span>INSTAGRAM</span>
+          
             </a>
             <a href="https://t.me/ali_alyagoob" class="cyber-btn" target="_blank">
-                <i class="fab fa-telegram-plane"></i><span>TELEGRAM NODE</span>
+                <i class="fab fa-telegram-plane"></i><span>TELEGRAM</span>
             </a>
             <a href="https://youtube.com/@Ali.Alyagoob" class="cyber-btn" target="_blank">
-                <i class="fab fa-youtube"></i><span>YOUTUBE BROADCAST</span>
+                <i class="fab fa-youtube"></i><span>YOUTUBE</span>
             </a>
         </div>
 
@@ -163,16 +176,7 @@
     </div>
 
     <script>
-        // الماوس
-        const dot = document.querySelector('.cursor-dot');
-        const circle = document.querySelector('.cursor-circle');
-        window.addEventListener('mousemove', (e) => {
-            dot.style.opacity = circle.style.opacity = "1";
-            dot.style.left = `${e.clientX - 3}px`; dot.style.top = `${e.clientY - 3}px`;
-            setTimeout(() => { circle.style.left = `${e.clientX - 17}px`; circle.style.top = `${e.clientY - 17}px`; }, 50);
-        });
-
-        // المطر الرقمي
+        // مصفوفة خلفية (Data Rain)
         const canvas = document.getElementById('dataRain');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -189,7 +193,7 @@
         }
         setInterval(draw, 50);
 
-        // فك التشفير
+        // تأثير السكرامبل للاسم
         const nameEl = document.getElementById("glitchName");
         const original = nameEl.innerText;
         function scramble() {
@@ -202,14 +206,13 @@
         }
         window.onload = scramble;
 
-        // الجنون العبقري (بعد 3 ثواني)
+        // تفعيل وضع الجمجمة والدماء
         const container = document.getElementById('mainContainer');
         setTimeout(() => {
             container.classList.add('skull-glitch');
             setTimeout(() => container.classList.remove('skull-glitch'), 2500);
         }, 3000);
 
-        // تكرار الجنون عشوائياً
         setInterval(() => {
             if(Math.random() > 0.7) {
                 container.classList.add('skull-glitch');
